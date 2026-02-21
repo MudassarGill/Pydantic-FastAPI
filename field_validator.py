@@ -19,6 +19,11 @@ def validate_email(cls,value):
      if domain_name not in domain:
          raise ValueError("Invalid email")
      return value
+
+@field_validator("name")
+@classmethod
+def validate_name(cls,value):
+    return value.upper()
    
 patient_info={
     "name":"John",
