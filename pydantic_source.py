@@ -1,11 +1,13 @@
-from pydantic import BaseModel
+from pydantic import BaseModel,AnyUrl,EmailStr
+from typing import Optional,Dict,List
 
 class Item(BaseModel):
     name: str
     age: int
-    email: str
+    email: EmailStr
     phone: int
-    address: str
+    address: Optional[str]=None
+    linkedin: AnyUrl
     city: str
     state: str
     zip: int
@@ -16,6 +18,7 @@ def insert_data(item: Item):
     print(f"inserting {item.email} into the database")
     print(f"inserting {item.phone} into the database")
     print(f"inserting {item.address} into the database")
+    print(f"inserting {item.linkedin} into the database")
     print(f"inserting {item.city} into the database")
     print(f"inserting {item.state} into the database")
     print(f"inserting {item.zip} into the database")
@@ -28,6 +31,7 @@ info={
     "email":"random@gmail.com",
     "phone":1234567890,
     "address":"123 Main St",
+    "linkedin":"https://www.linkedin.com/in/john-doe/",
     "city":"New York",
     "state":"NY",
     "zip":12345,
