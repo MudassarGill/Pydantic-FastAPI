@@ -1,17 +1,17 @@
-from pydantic import BaseModel,AnyUrl,EmailStr
-from typing import Optional,Dict,List
+from pydantic import BaseModel,AnyUrl,EmailStr,Field
+from typing import Optional,Dict,List,Annotated
 
 class Item(BaseModel):
-    name: str
-    age: int
-    email: EmailStr
-    phone: int
-    address: Optional[str]=None
-    linkedin: AnyUrl
-    city: str
-    state: str
-    zip: int
-    country: str
+    name: Annotated[str,Field(min_length=2,max_length=10,description="Name of the person",examples=["John","Jane"])]
+    age: Annotated[int,Field(gt=0,lt=100,description="Age of the person",examples=["25","30"])]
+    email: Annotated[EmailStr,Field(description="Email of the person",examples=["random@gmail.com"])]
+    phone: Annotated[int,Field(min_length=10,max_length=10,description="Phone number of the person",examples=["1234567890"])]
+    address: Annotated[Optional[str],Field(description="Address of the person",examples=["123 Main St"])]=None
+    linkedin: Annotated[AnyUrl,Field(description="LinkedIn profile URL of the person",examples=["https://www.linkedin.com/in/john-doe/"])]
+    city: Annotated[str,Field(description="City of the person",examples=["New York"])]
+    state: Annotated[str,Field(description="State of the person",examples=["NY"])]
+    zip: Annotated[int,Field(description="Zip code of the person",examples=["12345"])]
+    country: Annotated[str,Field(description="Country of the person",examples=["USA"])]
 def insert_data(item: Item):
     print(f"inserting {item.name} into the database")
     print(f"inserting {item.age} into the database")
@@ -27,7 +27,7 @@ def insert_data(item: Item):
     
 info={
     "name":"John",
-    "age":30,
+    "age":  30,
     "email":"random@gmail.com",
     "phone":1234567890,
     "address":"123 Main St",
